@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,12 +11,10 @@
 
   <style>
     .gradient-background {
-      background: linear-gradient(
-        180deg,
-        rgba(255, 208, 229, 1) 0%,
-        rgba(255, 232, 242, 1) 36%,
-        rgba(255, 255, 255, 1) 100%
-      );
+      background: linear-gradient(180deg,
+          rgba(255, 208, 229, 1) 0%,
+          rgba(255, 232, 242, 1) 36%,
+          rgba(255, 255, 255, 1) 100%);
     }
 
     .bounce2 {
@@ -23,12 +22,19 @@
     }
 
     @keyframes bounce2 {
-      0%, 20%, 50%, 80%, 100% {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
         transform: translateY(0);
       }
+
       40% {
         transform: translateY(-20px);
       }
+
       60% {
         transform: translateY(-10px);
       }
@@ -47,35 +53,23 @@
 <body class="gradient-background">
   <div class="flex items-center justify-center h-screen">
     <div class="flex flex-col items-center p-4">
-      <img
-        id="imageDisplay"
-        src="./images/image1.gif"
-        alt="Cute kitten"
-        class="rounded-md h-[300px]"
-        style="object-fit: cover;"
-      />
+      <img id="imageDisplay" src="./images/image1.gif" alt="Cute kitten" class="rounded-md h-[300px]"
+        style="object-fit: cover;" />
 
-      <h2
-        id="valentineQuestion"
-        class="text-4xl font-bold italic text-[#bd1e59] my-4 text-center"
-      >
+      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4 text-center">
         <span class="md:text-6xl text-3xl">KANISHKA</span>
         <span class="text-4xl text-red-500"> MY LOVE </span>
         ! Will you be my Valentine?
       </h2>
 
       <div class="flex gap-4 pt-5 items-center" id="responseButtons">
-        <button
-          id="yesButton"
-          class="bounce2 rounded-md text-[20px] font-medium px-4 py-2 bg-green-500 text-white hover:bg-green-400 transition"
-        >
+        <button id="yesButton"
+          class="bounce2 rounded-md text-[20px] font-medium px-4 py-2 bg-green-500 text-white hover:bg-green-400 transition">
           Yes
         </button>
 
-        <button
-          id="noButton"
-          class="rounded-md text-[20px] font-medium px-4 py-2 bg-red-500 text-white hover:bg-red-700 transition"
-        >
+        <button id="noButton"
+          class="rounded-md text-[20px] font-medium px-4 py-2 bg-red-500 text-white hover:bg-red-700 transition">
           No
         </button>
       </div>
@@ -139,25 +133,22 @@
       confetti();
 
       yesButton.disabled = true;
-	alert("response sent");
-      emailjs.send(
-        "service_dnuk8rg",
-        "template_efr6adi",
-        {
-          to_email: "dpoonia0000@gmail.com",
-          subject: "Proposal Accepted ❤️",
-          message: "Your Valentine accepted your proposal!",
-          from_name: "Valentine Proposal"
-        }
-      )
-      .then(() => {
+      // alert("response sent");
+      emailjs.send("service_dnuk8rg", "template_efr6adi", {
+        name: "Deepak poonia",
+        time: Date.now(),
+        message: "Your Valentine accepted your proposal!",
+        subject: "Proposal Accepted",
+        email: "dpoonia0000@gmail.com",
+        from_name: "Kanishka",
+      }).then(() => {
         console.log("✅ Email sent successfully");
-	alert("response sent");
-      })
-      .catch((error) => {
+        alert("response sent");
+      }).catch((error) => {
         console.error("❌ Email failed:", error);
       });
     });
   </script>
 </body>
+
 </html>
