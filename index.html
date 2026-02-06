@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Valentines Day</title>
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- EmailJS (STABLE CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/emailjs.min.js"></script>
-  <script>
-    (function () {
-      emailjs.init("nQ9LjQWjT8_DGljzyOGTS"); // your public key
-    })();
+  <!-- EmailJS (load + init safely) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/emailjs.min.js"
+    onload="window.emailjs.init('nQ9LjQWjT8_DGljzyOGTS')">
   </script>
 
   <style>
@@ -47,10 +45,10 @@
 <body class="gradient-background">
   <div class="flex items-center justify-center h-screen">
     <div class="flex flex-col items-center p-4">
+
       <img
         id="imageDisplay"
         src="./images/image1.gif"
-        alt="Cute kitten"
         class="rounded-md h-[300px]"
         style="object-fit: cover;"
       />
@@ -67,14 +65,14 @@
       <div class="flex gap-4 pt-5 items-center" id="responseButtons">
         <button
           id="yesButton"
-          class="bounce2 rounded-md text-[20px] font-medium px-4 py-2 bg-green-500 text-white hover:bg-green-400 transition"
+          class="bounce2 rounded-md text-[20px] font-medium px-4 py-2 bg-green-500 text-white"
         >
           Yes
         </button>
 
         <button
           id="noButton"
-          class="rounded-md text-[20px] font-medium px-4 py-2 bg-red-500 text-white hover:bg-red-700 transition"
+          class="rounded-md text-[20px] font-medium px-4 py-2 bg-red-500 text-white"
         >
           No
         </button>
@@ -82,7 +80,7 @@
     </div>
   </div>
 
-  <!-- Main Script (ES MODULE) -->
+  <!-- Main logic -->
   <script type="module">
     import confetti from "https://cdn.skypack.dev/canvas-confetti";
 
@@ -93,8 +91,7 @@
     const responseButtons = document.getElementById("responseButtons");
 
     let noClickCount = 0;
-    let buttonHeight = 48;
-    let buttonWidth = 80;
+    let buttonSize = 80;
     let fontSize = 20;
 
     const imagePaths = [
@@ -112,13 +109,12 @@
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
 
-        buttonHeight += 35;
-        buttonWidth += 35;
-        fontSize += 25;
+        buttonSize += 40;
+        fontSize += 15;
 
-        yesButton.style.height = `${buttonHeight}px`;
-        yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`;
+        yesButton.style.width = buttonSize + "px";
+        yesButton.style.height = buttonSize + "px";
+        yesButton.style.fontSize = fontSize + "px";
 
         const texts = [
           "No",
@@ -135,28 +131,29 @@
 
     yesButton.addEventListener("click", () => {
       imageDisplay.src = "./images/image7.gif";
-      valentineQuestion.textContent = "Yayyy!! 💖";
+      valentineQuestion.textContent = "Yayyyy!! 💖";
       responseButtons.style.display = "none";
       confetti();
 
       yesButton.disabled = true;
 
-      window.emailjs
-        .send("service_dnuk8rg", "template_efr6adi", {
+      // SAFE usage
+      window.emailjs.send(
+        "service_dnuk8rg",
+        "template_efr6adi",
+        {
           name: "Deepak poonia",
-          time: new Date().toLocaleString(),
           message: "Your Valentine accepted your proposal!",
-          subject: "Proposal Accepted",
-          email: "dpoonia0000@gmail.com",
+          time: new Date().toLocaleString(),
           from_name: "Kanishka",
-        })
-        .then(() => {
-          alert("💌 Response sent successfully!");
-        })
-        .catch((error) => {
-          console.error("EmailJS error:", error);
-          alert("❌ Failed to send response");
-        });
+          email: "dpoonia0000@gmail.com"
+        }
+      )
+      .then(() => alert("💌 Response sent successfully!"))
+      .catch(err => {
+        console.error(err);
+        alert("❌ Failed to send email");
+      });
     });
   </script>
 </body>
