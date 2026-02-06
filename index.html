@@ -8,10 +8,15 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- EmailJS (load + init safely) -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/emailjs.min.js"
-    onload="window.emailjs.init('nQ9LjQWjT8_DGljzyOGTS')">
+  <!-- Confetti (NON-MODULE) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- EmailJS (STABLE) -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/emailjs.min.js"></script>
+  <script>
+    window.onload = function () {
+      emailjs.init("nQ9LjQWjT8_DGljzyOGTS");
+    };
   </script>
 
   <style>
@@ -32,12 +37,8 @@
       0%, 20%, 50%, 80%, 100% {
         transform: translateY(0);
       }
-      40% {
-        transform: translateY(-20px);
-      }
-      60% {
-        transform: translateY(-10px);
-      }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
     }
   </style>
 </head>
@@ -46,44 +47,31 @@
   <div class="flex items-center justify-center h-screen">
     <div class="flex flex-col items-center p-4">
 
-      <img
-        id="imageDisplay"
-        src="./images/image1.gif"
-        class="rounded-md h-[300px]"
-        style="object-fit: cover;"
-      />
+      <img id="imageDisplay" src="./images/image1.gif"
+        class="rounded-md h-[300px]" style="object-fit: cover;" />
 
-      <h2
-        id="valentineQuestion"
-        class="text-4xl font-bold italic text-[#bd1e59] my-4 text-center"
-      >
+      <h2 id="valentineQuestion"
+        class="text-4xl font-bold italic text-[#bd1e59] my-4 text-center">
         <span class="md:text-6xl text-3xl">KANISHKA</span>
         <span class="text-4xl text-red-500"> MY LOVE </span>
         ! Will you be my Valentine?
       </h2>
 
       <div class="flex gap-4 pt-5 items-center" id="responseButtons">
-        <button
-          id="yesButton"
-          class="bounce2 rounded-md text-[20px] font-medium px-4 py-2 bg-green-500 text-white"
-        >
+        <button id="yesButton"
+          class="bounce2 rounded-md text-[20px] font-medium px-4 py-2 bg-green-500 text-white">
           Yes
         </button>
 
-        <button
-          id="noButton"
-          class="rounded-md text-[20px] font-medium px-4 py-2 bg-red-500 text-white"
-        >
+        <button id="noButton"
+          class="rounded-md text-[20px] font-medium px-4 py-2 bg-red-500 text-white">
           No
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Main logic -->
-  <script type="module">
-    import confetti from "https://cdn.skypack.dev/canvas-confetti";
-
+  <script>
     const yesButton = document.getElementById("yesButton");
     const noButton = document.getElementById("noButton");
     const imageDisplay = document.getElementById("imageDisplay");
@@ -91,7 +79,7 @@
     const responseButtons = document.getElementById("responseButtons");
 
     let noClickCount = 0;
-    let buttonSize = 80;
+    let size = 80;
     let fontSize = 20;
 
     const imagePaths = [
@@ -104,16 +92,16 @@
       "./images/image7.gif",
     ];
 
-    noButton.addEventListener("click", () => {
+    noButton.onclick = () => {
       if (noClickCount < 5) {
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
 
-        buttonSize += 40;
+        size += 40;
         fontSize += 15;
 
-        yesButton.style.width = buttonSize + "px";
-        yesButton.style.height = buttonSize + "px";
+        yesButton.style.width = size + "px";
+        yesButton.style.height = size + "px";
         yesButton.style.fontSize = fontSize + "px";
 
         const texts = [
@@ -127,34 +115,32 @@
 
         noButton.textContent = texts[noClickCount];
       }
-    });
+    };
 
-    yesButton.addEventListener("click", () => {
+    yesButton.onclick = () => {
       imageDisplay.src = "./images/image7.gif";
       valentineQuestion.textContent = "Yayyyy!! 💖";
       responseButtons.style.display = "none";
       confetti();
-
       yesButton.disabled = true;
 
-      // SAFE usage
-      window.emailjs.send(
+      emailjs.send(
         "service_dnuk8rg",
         "template_efr6adi",
         {
           name: "Deepak poonia",
+          from_name: "Kanishka",
           message: "Your Valentine accepted your proposal!",
           time: new Date().toLocaleString(),
-          from_name: "Kanishka",
           email: "dpoonia0000@gmail.com"
         }
       )
       .then(() => alert("💌 Response sent successfully!"))
       .catch(err => {
         console.error(err);
-        alert("❌ Failed to send email");
+        alert("❌ Email failed");
       });
-    });
+    };
   </script>
 </body>
 </html>
