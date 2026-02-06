@@ -45,9 +45,10 @@
   <script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
   <script>
     (function () {
-      emailjs.init("nQ9LjQWjT8_DGljzyOGTS");
+      window.emailjs.init("nQ9LjQWjT8_DGljzyOGTS");
     })();
   </script>
+
 </head>
 
 <body class="gradient-background">
@@ -134,7 +135,7 @@
 
       yesButton.disabled = true;
       // alert("response sent");
-      emailjs.send("service_dnuk8rg", "template_efr6adi", {
+      window.emailjs.send("service_dnuk8rg", "template_efr6adi", {
         name: "Deepak poonia",
         time: Date.now(),
         message: "Your Valentine accepted your proposal!",
