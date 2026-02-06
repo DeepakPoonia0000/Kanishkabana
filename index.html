@@ -139,7 +139,7 @@
       confetti();
 
       yesButton.disabled = true;
-	window.alert("response sent");
+	windows.alert("response sent");
       emailjs.send(
         "service_dnuk8rg",
         "template_efr6adi",
@@ -152,7 +152,7 @@
       )
       .then(() => {
         console.log("✅ Email sent successfully");
-	window.alert("response sent");
+	windows.alert("response sent");
       })
       .catch((error) => {
         console.error("❌ Email failed:", error);
